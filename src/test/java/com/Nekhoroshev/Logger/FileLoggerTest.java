@@ -1,6 +1,8 @@
-package com.testTask;
+package com.Nekhoroshev.Logger;
 
+import com.sun.javafx.PlatformUtil;
 import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -14,6 +16,22 @@ import static org.junit.jupiter.api.Assertions.*;
 class FileLoggerTest {
 
     private final String fileName = "Logs";
+    private static String stringEnd;
+    public final static char lf = '\n';
+    public final static char cr = '\r';
+    public final static String crlf = "" + cr + lf;
+
+    @BeforeAll
+    public static void setStringEnd(){
+        if (PlatformUtil.isWindows()){
+            stringEnd = crlf;
+        } else if (PlatformUtil.isMac()){
+            stringEnd = "" + cr;
+        } else {
+            stringEnd = "" + lf;
+        }
+    }
+
 
     @BeforeEach
     public void createFile() {
@@ -26,15 +44,9 @@ class FileLoggerTest {
     }
 
     @Test
-    public void testCreateLoggerWithNotExitLevel(){
-
-        assertThrows(IllegalArgumentException.class, ()-> new FileLogger("Something",fileName));
-    }
-
-    @Test
     public void testErrorForLoggerError(){
-        ILogger log = new FileLogger("ERROR", fileName);
-        log.error("Error message");
+        ILogger log = new FileLogger(Level.ERROR, fileName);
+        log.error("Error message", new Error());
 
         try (FileReader fileReader = new FileReader(fileName);
              BufferedReader bufferedReader = new BufferedReader(fileReader)) {
@@ -49,7 +61,7 @@ class FileLoggerTest {
 
     @Test
     public void testInfoForLoggerError(){
-        ILogger log = new FileLogger("ERROR", fileName);
+        ILogger log = new FileLogger(Level.ERROR, fileName);
         log.info("Info message");
 
         try (FileReader fileReader = new FileReader(fileName);
@@ -65,7 +77,7 @@ class FileLoggerTest {
 
     @Test
     public void testDebugForLoggerError(){
-        ILogger log = new FileLogger("ERROR", fileName);
+        ILogger log = new FileLogger(Level.ERROR, fileName);
         log.debug("debug message");
 
         try (FileReader fileReader = new FileReader(fileName);
@@ -81,8 +93,8 @@ class FileLoggerTest {
 
     @Test
     public void testErrorForLoggerInfo(){
-        ILogger log = new FileLogger("INFO", fileName);
-        log.error("Error message");
+        ILogger log = new FileLogger(Level.INFO, fileName);
+        log.error("Error message", new Error());
 
         try (FileReader fileReader = new FileReader(fileName);
              BufferedReader bufferedReader = new BufferedReader(fileReader)) {
@@ -97,7 +109,7 @@ class FileLoggerTest {
 
     @Test
     public void testInfoForLoggerInfo(){
-        ILogger log = new FileLogger("INFO", fileName);
+        ILogger log = new FileLogger(Level.INFO, fileName);
         log.info("Info message");
 
         try (FileReader fileReader = new FileReader(fileName);
@@ -113,7 +125,7 @@ class FileLoggerTest {
 
     @Test
     public void testDebugForLoggerInfo() {
-        ILogger log = new FileLogger("INFO", fileName);
+        ILogger log = new FileLogger(Level.INFO, fileName);
         log.debug("debug message");
 
         try (FileReader fileReader = new FileReader(fileName);
@@ -129,8 +141,8 @@ class FileLoggerTest {
 
     @Test
     public void testErrorForLoggerDebug(){
-        ILogger log = new FileLogger("DEBUG", fileName);
-        log.error("Error message");
+        ILogger log = new FileLogger(Level.DEBUG, fileName);
+        log.error("Error message", new Error());
 
         try (FileReader fileReader = new FileReader(fileName);
              BufferedReader bufferedReader = new BufferedReader(fileReader)) {
@@ -145,7 +157,7 @@ class FileLoggerTest {
 
     @Test
     public void testInfoForLoggerDebug(){
-        ILogger log = new FileLogger("DEBUG", fileName);
+        ILogger log = new FileLogger(Level.DEBUG, fileName);
         log.info("Info message");
 
         try (FileReader fileReader = new FileReader(fileName);
@@ -161,7 +173,7 @@ class FileLoggerTest {
 
     @Test
     public void testDebugForLoggerDebug() {
-        ILogger log = new FileLogger("DEBUG", fileName);
+        ILogger log = new FileLogger(Level.DEBUG, fileName);
         log.debug("debug message");
 
         try (FileReader fileReader = new FileReader(fileName);

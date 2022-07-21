@@ -1,4 +1,4 @@
-package com.testTask;
+package com.Nekhoroshev.Logger;
 
 /*Написать логгер. Класс, который умеет логировать сообщения в консоль или в файл с различными уровнями INFO, DEBUG, ERROR
 
@@ -23,11 +23,12 @@ logger2.error("message4", exception) - логируется сообщение "
 
 public interface ILogger {
 
+    void error(String message, Error error);
+
     void info(String message);
 
     void debug(String message);
 
-    void error(String message);
 
 
 }

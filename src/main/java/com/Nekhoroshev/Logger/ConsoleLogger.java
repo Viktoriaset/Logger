@@ -1,16 +1,21 @@
-package com.testTask;
+package com.Nekhoroshev.Logger;
+
+import lombok.Getter;
+import lombok.Setter;
 
 import java.io.PrintWriter;
 
+@Getter
+@Setter
 public class ConsoleLogger extends Logger {
 
     private final PrintWriter pw = new PrintWriter(System.out, true);
 
-    public ConsoleLogger(String level) {
+    public ConsoleLogger(Level level) {
         super(level);
     }
 
-    public void writing(String message) {
+    public void write(String message) {
         pw.println(message);
     }
 }
