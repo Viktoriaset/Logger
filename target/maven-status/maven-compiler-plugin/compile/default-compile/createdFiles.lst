@@ -1,0 +1,5 @@
+com\Nekhoroshev\Logger\ConsoleLogger.class
+com\Nekhoroshev\Logger\Level.class
+com\Nekhoroshev\Logger\FileLogger.class
+com\Nekhoroshev\Logger\ILogger.class
+com\Nekhoroshev\Logger\Logger.class
