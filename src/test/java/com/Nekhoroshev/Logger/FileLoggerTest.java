@@ -1,8 +1,6 @@
 package com.Nekhoroshev.Logger;
 
-import com.sun.javafx.PlatformUtil;
 import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -15,23 +13,11 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class FileLoggerTest {
 
-    private final String fileName = "Logs";
-    private static String stringEnd;
-    public final static char lf = '\n';
-    public final static char cr = '\r';
-    public final static String crlf = "" + cr + lf;
+    private final String fileName = "build/Logs";
 
-    @BeforeAll
-    public static void setStringEnd(){
-        if (PlatformUtil.isWindows()){
-            stringEnd = crlf;
-        } else if (PlatformUtil.isMac()){
-            stringEnd = "" + cr;
-        } else {
-            stringEnd = "" + lf;
-        }
-    }
-
+    private final String errorMassage = "Error message";
+    private final String infoMassage = "Info message";
+    private final String debugMassage = "Debug message";
 
     @BeforeEach
     public void createFile() {
@@ -46,13 +32,13 @@ class FileLoggerTest {
     @Test
     public void testErrorForLoggerError(){
         ILogger log = new FileLogger(Level.ERROR, fileName);
-        log.error("Error message", new Error());
+        log.error(errorMassage, new Error());
 
         try (FileReader fileReader = new FileReader(fileName);
              BufferedReader bufferedReader = new BufferedReader(fileReader)) {
 
             String str = bufferedReader.readLine();
-            assertEquals("Error message", str);
+            assertTrue( str.contains(errorMassage));
 
         } catch (IOException e) {
             System.out.println(e.getMessage());
@@ -62,7 +48,7 @@ class FileLoggerTest {
     @Test
     public void testInfoForLoggerError(){
         ILogger log = new FileLogger(Level.ERROR, fileName);
-        log.info("Info message");
+        log.info(infoMassage);
 
         try (FileReader fileReader = new FileReader(fileName);
              BufferedReader bufferedReader = new BufferedReader(fileReader)) {
@@ -94,13 +80,13 @@ class FileLoggerTest {
     @Test
     public void testErrorForLoggerInfo(){
         ILogger log = new FileLogger(Level.INFO, fileName);
-        log.error("Error message", new Error());
+        log.error(errorMassage, new Error());
 
         try (FileReader fileReader = new FileReader(fileName);
              BufferedReader bufferedReader = new BufferedReader(fileReader)) {
 
             String str = bufferedReader.readLine();
-            assertEquals("Error message", str);
+            assertTrue( str.contains(errorMassage));
 
         } catch (IOException e) {
             System.out.println(e.getMessage());
@@ -110,13 +96,13 @@ class FileLoggerTest {
     @Test
     public void testInfoForLoggerInfo(){
         ILogger log = new FileLogger(Level.INFO, fileName);
-        log.info("Info message");
+        log.info(infoMassage);
 
         try (FileReader fileReader = new FileReader(fileName);
              BufferedReader bufferedReader = new BufferedReader(fileReader)) {
 
             String str = bufferedReader.readLine();
-            assertEquals("Info message", str);
+            assertEquals(infoMassage, str);
 
         } catch (IOException e) {
             System.out.println(e.getMessage());
@@ -126,7 +112,7 @@ class FileLoggerTest {
     @Test
     public void testDebugForLoggerInfo() {
         ILogger log = new FileLogger(Level.INFO, fileName);
-        log.debug("debug message");
+        log.debug(debugMassage);
 
         try (FileReader fileReader = new FileReader(fileName);
              BufferedReader bufferedReader = new BufferedReader(fileReader)) {
@@ -142,13 +128,13 @@ class FileLoggerTest {
     @Test
     public void testErrorForLoggerDebug(){
         ILogger log = new FileLogger(Level.DEBUG, fileName);
-        log.error("Error message", new Error());
+        log.error(errorMassage, new Error());
 
         try (FileReader fileReader = new FileReader(fileName);
              BufferedReader bufferedReader = new BufferedReader(fileReader)) {
 
             String str = bufferedReader.readLine();
-            assertEquals("Error message", str);
+            assertTrue( str.contains(errorMassage));
 
         } catch (IOException e) {
             System.out.println(e.getMessage());
@@ -158,13 +144,13 @@ class FileLoggerTest {
     @Test
     public void testInfoForLoggerDebug(){
         ILogger log = new FileLogger(Level.DEBUG, fileName);
-        log.info("Info message");
+        log.info(infoMassage);
 
         try (FileReader fileReader = new FileReader(fileName);
              BufferedReader bufferedReader = new BufferedReader(fileReader)) {
 
             String str = bufferedReader.readLine();
-            assertEquals("Info message", str);
+            assertEquals(infoMassage, str);
 
         } catch (IOException e) {
             System.out.println(e.getMessage());
@@ -174,13 +160,13 @@ class FileLoggerTest {
     @Test
     public void testDebugForLoggerDebug() {
         ILogger log = new FileLogger(Level.DEBUG, fileName);
-        log.debug("debug message");
+        log.debug(debugMassage);
 
         try (FileReader fileReader = new FileReader(fileName);
              BufferedReader bufferedReader = new BufferedReader(fileReader)) {
 
             String str = bufferedReader.readLine();
-            assertEquals("debug message", str);
+            assertEquals(debugMassage, str);
 
         } catch (IOException e) {
             System.out.println(e.getMessage());
