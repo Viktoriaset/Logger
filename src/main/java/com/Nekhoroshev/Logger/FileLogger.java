@@ -21,8 +21,11 @@ public class FileLogger extends Logger {
 
     @Override
     void write(String message) {
+        StringBuilder sb = new StringBuilder();
+        sb.append(message).append(System.lineSeparator());
+
         try (FileWriter fileWriter = new FileWriter(fileName, true)) {
-            fileWriter.write(message + '\n');
+            fileWriter.write(sb.toString());
         } catch (IOException e) {
             System.out.println(e.getMessage());
         }

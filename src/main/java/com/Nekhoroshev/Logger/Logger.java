@@ -11,9 +11,7 @@ public abstract class Logger implements ILogger {
 
     @Override
     public void error(String message, Error error) {
-        write(message);
-        write("Error type: " + error.toString());
-        write("Error message: " + error.getMessage());
+        write(message + " Error type: " + error.toString() + " Error message: " + error.getMessage());
     }
 
     @Override
